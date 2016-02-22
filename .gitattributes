@@ -1,7 +1,7 @@
 # https://help.github.com/articles/dealing-with-line-endings/
 * text=auto
 
-*.cpp text
+*.cpp text eol=crlf
 *.h text
 
 *.bmp binary
