@@ -1,2 +1,4 @@
 * text eol=crlf
 
+*.bmp binary
+*.exe binary
