@@ -1,4 +1,14 @@
-* text eol=crlf
+*.bat text eol=crlf
+*.txt text eol=crlf
+
+*.cpp text eol=crlf
+*.c   text eol=crlf
+*.h   text eol=crlf
+*.S   text eol=crlf
+*.s   text eol=crlf
+
+*.py  text eol=crlf
+*.cs  text eol=crlf
 
 *.bmp binary
 *.exe binary
