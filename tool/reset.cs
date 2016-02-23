@@ -17,21 +17,30 @@ namespace ConsoleApplication1
                 return -1;
             }
 
+
+            Console.WriteLine("resetting...");
             SerialPort port = new SerialPort(args[0], 1200);
+            port.DtrEnable = true;
+
             try
             {
                 port.Open();
             }
             catch (Exception e)
             {
-                Console.WriteLine("exception error");
+                Console.WriteLine(e.Message);
                 return -1;
-            }    
+            }
+
+            System.Threading.Thread.Sleep(500);
+
+            port.DtrEnable = false;
             port.Close();
             port.Dispose();
 
             System.Threading.Thread.Sleep(2000);
 
+            Console.WriteLine("done");
             return 0;
         }
     }
