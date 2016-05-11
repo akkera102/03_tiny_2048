@@ -4,7 +4,6 @@
 extern "C" {
 #endif
 
-
 // ISR(TIMER3_COMPA_vect)
 // ISR(TIMER1_COMPA_vect)
 
@@ -20,6 +19,18 @@ enum {
 	SND_OP_STOP      = 0xf0,
 };
 
+//---------------------------------------------------------------------------
+#if defined(ARDUBOY_10)
+
+	#define SND_PIN1 5			// PC6
+	#define SND_PIN2 13			// PC7
+
+#elif defined(ARDUBOY_DEVKIT)
+
+	#define SND_PIN1 A2
+	#define SND_PIN2 A3
+
+#endif
 
 //---------------------------------------------------------------------------
 typedef struct {

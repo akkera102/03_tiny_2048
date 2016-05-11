@@ -3,9 +3,6 @@
 #include "snd.h"
 #include "oled.h"
 
-// ch0 timer3(16bit) pin:SND_PIN1
-// ch1 timer1(16bit) pin:SND_PIN2
-
 //---------------------------------------------------------------------------
 PROGMEM const unsigned int SndMidiNoteFreq[128] = {
 	16,17,18,19,21,22,23,24,26,28,29,31,33,35,37,39,41,44,46,49,52,55,58,62,65,
@@ -20,26 +17,24 @@ PROGMEM const unsigned int SndMidiNoteFreq[128] = {
 //---------------------------------------------------------------------------
 ST_SND Snd;
 
-#ifdef AB_DEVKIT
-#define SND_PIN1 A2
-#define SND_PIN2 A3
-#elif defined(ARDUBOY_10)
-#define SND_PIN1 5  // PC6
-#define SND_PIN2 13 // PC7
-#endif
 
 //---------------------------------------------------------------------------
 void SndInit(void)
 {
-	_Memset(&Snd,   0x00, sizeof(ST_SND));
+	_Memset(&Snd, 0x00, sizeof(ST_SND));
 
 	pinMode(SND_PIN1, OUTPUT);
-	pinMode(SND_PIN2, OUTPUT);
-
 	Snd.ch[0].pPinPort = portOutputRegister(digitalPinToPort(SND_PIN1));
 	Snd.ch[0].pinMask  = digitalPinToBitMask(SND_PIN1);
+
+#if defined(ARDUBOY_10)
+
+	pinMode(SND_PIN2, OUTPUT);
 	Snd.ch[1].pPinPort = portOutputRegister(digitalPinToPort(SND_PIN2));
 	Snd.ch[1].pinMask  = digitalPinToBitMask(SND_PIN2);
+
+#endif
+
 
 	TCCR3A = 0;
 	TCCR3B = 0;
@@ -218,13 +213,20 @@ void SndStopTimer(u8 ch)
 	if(ch == 0)
 	{
 		TIMSK3 &= ~(1 << OCIE3A);
+		*Snd.ch[0].pPinPort &= ~Snd.ch[0].pinMask;
 	}
 	else
 	{
 		TIMSK1 &= ~(1 << OCIE1A);
+
+#if defined(ARDUBOY_10)
+
+		*Snd.ch[1].pPinPort &= ~Snd.ch[1].pinMask;
+
+#endif
+
 	}
 
-	*Snd.ch[ch].pPinPort &= ~Snd.ch[ch].pinMask;
 }
 //---------------------------------------------------------------------------
 // TIMER 3 ch0
@@ -246,7 +248,12 @@ ISR(TIMER3_COMPA_vect)
 // TIMER 1 ch1
 ISR(TIMER1_COMPA_vect)
 {
+
+#if defined(ARDUBOY_10)
+
 	*Snd.ch[1].pPinPort ^= Snd.ch[1].pinMask;
+
+#endif
 
 
 	if(Snd.isTonePlay == FALSE)
