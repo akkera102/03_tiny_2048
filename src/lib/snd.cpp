@@ -3,8 +3,8 @@
 #include "snd.h"
 #include "oled.h"
 
-// ch0 timer3(16bit) pin:A2
-// ch1 timer1(16bit) pin:A3
+// ch0 timer3(16bit) pin:SND_PIN1
+// ch1 timer1(16bit) pin:SND_PIN2
 
 //---------------------------------------------------------------------------
 PROGMEM const unsigned int SndMidiNoteFreq[128] = {
@@ -20,18 +20,26 @@ PROGMEM const unsigned int SndMidiNoteFreq[128] = {
 //---------------------------------------------------------------------------
 ST_SND Snd;
 
+#ifdef AB_DEVKIT
+#define SND_PIN1 A2
+#define SND_PIN2 A3
+#elif defined(ARDUBOY_10)
+#define SND_PIN1 5  // PC6
+#define SND_PIN2 13 // PC7
+#endif
+
 //---------------------------------------------------------------------------
 void SndInit(void)
 {
 	_Memset(&Snd,   0x00, sizeof(ST_SND));
 
-	pinMode(A2, OUTPUT);
-	pinMode(A3, OUTPUT);
+	pinMode(SND_PIN1, OUTPUT);
+	pinMode(SND_PIN2, OUTPUT);
 
-	Snd.ch[0].pPinPort = portOutputRegister(digitalPinToPort(A2));
-	Snd.ch[0].pinMask  = digitalPinToBitMask(A2);
-	Snd.ch[1].pPinPort = portOutputRegister(digitalPinToPort(A3));
-	Snd.ch[1].pinMask  = digitalPinToBitMask(A3);
+	Snd.ch[0].pPinPort = portOutputRegister(digitalPinToPort(SND_PIN1));
+	Snd.ch[0].pinMask  = digitalPinToBitMask(SND_PIN1);
+	Snd.ch[1].pPinPort = portOutputRegister(digitalPinToPort(SND_PIN2));
+	Snd.ch[1].pinMask  = digitalPinToBitMask(SND_PIN2);
 
 	TCCR3A = 0;
 	TCCR3B = 0;

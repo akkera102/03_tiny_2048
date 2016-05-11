@@ -13,6 +13,9 @@ LD 			= $(PREFIX)gcc
 OBJCOPY		= $(PREFIX)objcopy
 NM			= $(PREFIX)nm
 
+#ARDUBOY_MODEL	= AB_DEVKIT
+ARDUBOY_MODEL	= ARDUBOY_10
+
 SFILES	= \
 	$(wildcard core/*.s) \
 	$(wildcard core/*.S) \
@@ -37,7 +40,10 @@ TARGET_HEX	= $(NAME).hex
 
 #=============================================================================
 
-DFLAGS	= -DF_CPU=16000000L -DARDUINO=10606 -DARDUINO_AVR_LEONARDO -DARDUINO_ARCH_AVR -DUSB_VID=0x2341 -DUSB_PID=0x8036 -DUSB_MANUFACTURER="Unknown"
+DFLAGS	= -DF_CPU=16000000L \
+	  -DARDUINO=10606 -DARDUINO_AVR_LEONARDO -DARDUINO_ARCH_AVR \
+	  -D$(ARDUBOY_MODEL)\
+	  -DUSB_VID=0x2341 -DUSB_PID=0x8036 -DUSB_MANUFACTURER="Unknown"
 
 GFLAGS	= -c -g -Os -Wall -Wextra -std=gnu++11 -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -mmcu=atmega32u4 $(DFLAGS) $(foreach incdir,$(INCDIR),-I$(incdir)) -x c++ -fpermissive
 
