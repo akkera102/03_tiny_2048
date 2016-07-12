@@ -12,7 +12,7 @@ cls
 goto loop
 
 :usb
-..\tool\reset COM5
+..\tool\reset COM10
 make usb
 avr-size test.elf -C --mcu=atmega32u4
 

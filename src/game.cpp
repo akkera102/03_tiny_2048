@@ -145,7 +145,7 @@ void GameExecOver(void)
 		OledDrawStr(0, 7, "OVER");
 	}
 
-	if(KeyGetTrg() & KEY_A)
+	if(KeyGetTrg() & KEY_B)
 	{
 		ScoreSaveBest();
 		GameSetAct(GAME_EXEC_RESET);

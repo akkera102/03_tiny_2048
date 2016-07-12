@@ -33,6 +33,7 @@ etc             : Visual Studio 2015 C#
 
 
 ## History
+v1.03 2016/07/12    fix button A, B
 v1.02 2016/05/11    support arduboy 1.0. thank you cactus!
 v1.01 2016/02/23    fix. reset bug of 64 bit computer.
 v1.00 2016/02/20    first version
