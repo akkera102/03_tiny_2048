@@ -32,6 +32,10 @@ image converter : python 2.6 + PIL
 etc             : Visual Studio 2015 C#
 
 
+## License
+GPL v2
+
+
 ## History
 v1.03 2016/07/12    fix button A, B
 v1.02 2016/05/11    support arduboy 1.0. thank you cactus!
