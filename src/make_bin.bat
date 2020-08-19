@@ -1,5 +1,5 @@
 @echo off
-set PATH="C:\Program Files\Arduino\hardware\tools\avr\bin";%PATH%
+set PATH="C:\Program Files (x86)\Arduino\hardware\tools\avr\bin";%PATH%
 
 :loop
 del test.*
